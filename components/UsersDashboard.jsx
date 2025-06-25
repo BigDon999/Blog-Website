@@ -82,7 +82,8 @@ function UsersDashboard({ children }) {
     <div className={styles.container}>
       {/* Hero Section */}
       <section
-      style={{
+        className={`${styles.slideIn} ${styles.slideInDelay1}`}
+        style={{
           display: "flex",
           flexDirection: isMobile ? "column" : "row",
           alignItems: "center",
@@ -93,9 +94,9 @@ function UsersDashboard({ children }) {
           marginBottom: "0.5rem",
           gap: isMobile ? "0.3rem" : "0.5rem",
           width: "100%",
-      }}
-    >
-      {/* Image Block */}
+        }}
+      >
+        {/* Image Block */}
         <div
           style={{
             flex: 1,
@@ -158,6 +159,7 @@ function UsersDashboard({ children }) {
 
       {/* Layout */}
       <div
+        className={`${styles.slideIn} ${styles.slideInDelay2}`}
         style={{
           display: "flex",
           flexDirection: isMobile ? "column" : "row",
@@ -165,7 +167,7 @@ function UsersDashboard({ children }) {
         }}
       >
         {/* Main News */}
-        <div style={{ flex: 3 }}>
+        <div className={`${styles.slideIn} ${styles.slideInDelay3}`} style={{ flex: 3 }}>
           <div
             style={{
             marginBottom: 24,
@@ -348,19 +350,20 @@ function UsersDashboard({ children }) {
 
         {/* Sidebar */}
         <aside
+          className={`${styles.slideIn} ${styles.slideInDelay4}`}
           style={{
-          flex: 1,
+            flex: 1,
             width: "100%",
             maxWidth: isMobile ? 320 : 340,
             marginLeft: isMobile ? 0 : "auto",
             margin: isMobile ? "24px auto 0" : undefined,
             background: "#fff7ef",
-          borderRadius: 12,
+            borderRadius: 12,
             boxShadow: "0 2px 8px rgba(255,136,0,0.07)",
             padding: "1.5rem 1rem",
             height: "fit-content",
             position: isMobile ? "static" : "sticky",
-          top: 32,
+            top: 32,
             marginTop: isMobile ? 0 : 132,
             textAlign: isMobile ? "center" : "left",
           }}

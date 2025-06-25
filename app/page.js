@@ -71,7 +71,7 @@ export default function Home() {
     <>
       <Navbar />
       <div className={styles.page}>
-        <section className={styles.hero}>
+        <section className={`${styles.hero} ${styles.slideIn} ${styles.slideInDelay1}`}>
           <div className={styles.heroText}>
             <h1>
               Welcome to <span style={{ color: "orange" }}>Blog</span>Sphere
@@ -121,7 +121,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className={styles.servicesSection} id="services">
+        <section className={`${styles.servicesSection} ${styles.slideIn} ${styles.slideInDelay2}`} id="services">
           <h2 className={styles.servicesTitle}>What We Offer</h2>
           <div className={styles.servicesList}>
             <div className={styles.serviceItem}>
@@ -202,7 +202,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className={styles.aboutSection} id="about">
+        <section className={`${styles.aboutSection} ${styles.slideIn} ${styles.slideInDelay3}`} id="about">
           <div className={styles.aboutImageWrapper}>
             <Image
               src="/assets/about1.jpg"
@@ -232,7 +232,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className={styles.faqSection} id="faq">
+        <section className={`${styles.faqSection} ${styles.slideIn} ${styles.slideInDelay4}`} id="faq">
           <h2 className={styles.faqTitle}>Frequently Asked Questions</h2>
           <div className={styles.faqGrid}>
             <div className={styles.faqCol}>
@@ -305,7 +305,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className={styles.testimoniesSection} id="testimonies">
+        <section className={`${styles.testimoniesSection} ${styles.slideIn} ${styles.slideInDelay5}`} id="testimonies">
           <h2 className={styles.testimoniesTitle}>What Our Readers Say</h2>
           <div className={styles.scroller}>
             <div className={styles.testimoniesList}>
@@ -321,7 +321,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className={styles.contactSection} id="contact" ref={contactRef}>
+        <section className={`${styles.contactSection} ${styles.slideIn} ${styles.slideInDelay5}`} id="contact" ref={contactRef}>
           <h2 className={styles.contactTitle}>Contact Us</h2>
           <form
             className={styles.contactForm}

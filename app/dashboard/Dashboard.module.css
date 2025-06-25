@@ -264,4 +264,34 @@
     padding: 0.45rem 0.9rem;
     font-size: 17px;
   }
+}
+@keyframes slideInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slideIn {
+  opacity: 0;
+  animation: slideInUp 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+.slideInDelay1 {
+  animation-delay: 0.15s;
+}
+.slideInDelay2 {
+  animation-delay: 0.3s;
+}
+.slideInDelay3 {
+  animation-delay: 0.45s;
+}
+.slideInDelay4 {
+  animation-delay: 0.6s;
+}
+.slideInDelay5 {
+  animation-delay: 0.75s;
 } 
