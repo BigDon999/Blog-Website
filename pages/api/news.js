@@ -4,6 +4,12 @@ export default async function handler(req, res) {
   const NEWS_API_KEY = process.env.NEWS_API_KEY;
   const GNEWS_API_KEY = process.env.GNEWS_API_KEY;
   const CURRENTS_API_KEY = process.env.CURRENTS_API_KEY;
+
+  // Debug: Log if keys are missing
+  console.log('NEWS_API_KEY:', NEWS_API_KEY ? 'set' : 'MISSING');
+  console.log('GNEWS_API_KEY:', GNEWS_API_KEY ? 'set' : 'MISSING');
+  console.log('CURRENTS_API_KEY:', CURRENTS_API_KEY ? 'set' : 'MISSING');
+
   try {
     // NewsAPI
     let newsApiUrl = `https://newsapi.org/v2/top-headlines?language=en&pageSize=10&apiKey=${NEWS_API_KEY}`;
@@ -14,6 +20,11 @@ export default async function handler(req, res) {
     // Currents
     let currentsUrl = `https://api.currentsapi.services/v1/latest-news?language=en&apiKey=${CURRENTS_API_KEY}`;
     if (category) currentsUrl += `&category=${category}`;
+
+    // Debug: Log URLs
+    console.log('newsApiUrl:', newsApiUrl);
+    console.log('gnewsUrl:', gnewsUrl);
+    console.log('currentsUrl:', currentsUrl);
 
     const [newsApiRes, gnewsRes, currentsRes] = await Promise.all([
       fetch(newsApiUrl),
@@ -26,6 +37,11 @@ export default async function handler(req, res) {
       gnewsRes.json(),
       currentsRes.json(),
     ]);
+
+    // Debug: Log API responses
+    console.log('newsApiData:', newsApiData);
+    console.log('gnewsData:', gnewsData);
+    console.log('currentsData:', currentsData);
 
     // Normalize articles from all APIs
     const newsApiArticles = (newsApiData.articles || []).map(a => ({
@@ -60,6 +76,7 @@ export default async function handler(req, res) {
 
     res.status(200).json({ articles: allArticles });
   } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch news', details: err.message });
+    console.error('News API error:', err);
+    res.status(500).json({ error: 'Failed to fetch news', details: err.message, stack: err.stack });
   }
 } 
