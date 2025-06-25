@@ -1,9 +1,3 @@
-import fetch from 'node-fetch';
-
-const NEWS_API_KEY = 'a299620ce7e54dd999c01568c07b2cfc';
-const GNEWS_API_KEY = 'd2f21bd9cce90430955e4208384e54c3';
-const CURRENTS_API_KEY = '78rb0XvdMoUW_FPUbAjxXzNcgpztgFS0SSLIud2WPEs4UI7W';
-
 export default async function handler(req, res) {
   const { category } = req.query;
   try {
