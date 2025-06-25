@@ -1,10 +1,98 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, memo } from "react";
 import styles from "../app/dashboard/Dashboard.module.css";
 import { FaBookmark } from "react-icons/fa";
 import Image from "next/image";
 
 const PAGE_SIZE = 12;
+
+// NewsCard component for memoization
+const NewsCard = memo(function NewsCard({ article, isBookmarked, handleBookmark }) {
+  return (
+    <a
+      href={article.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={styles.newsCard}
+      style={{
+        display: "block",
+        background: "#fff",
+        borderRadius: 12,
+        overflow: "hidden",
+        boxShadow: "0 2px 10px rgba(0,0,0,0.04)",
+        position: "relative",
+        textDecoration: "none",
+        color: "inherit",
+      }}
+    >
+      {article.image && (
+        <img
+          src={article.image}
+          alt={article.title}
+          loading="lazy"
+          style={{
+            width: "100%",
+            height: 180,
+            objectFit: "cover",
+            background: "#ffe5cc",
+          }}
+          onError={e => {
+            e.target.style.display = "none";
+          }}
+        />
+      )}
+      <button
+        onClick={e => { e.preventDefault(); e.stopPropagation(); handleBookmark(article); }}
+        style={{
+          position: "absolute",
+          top: 12,
+          right: 12,
+          background: "none",
+          border: "none",
+          fontSize: 22,
+          color: isBookmarked(article) ? "#ff8800" : "#bbb",
+          cursor: "pointer",
+        }}
+      >
+        <FaBookmark />
+      </button>
+      <div style={{ padding: "1rem" }}>
+        <div
+          style={{
+            color: "#ff8800",
+            fontWeight: 600,
+            fontSize: 14,
+          }}
+        >
+          {article.source}
+        </div>
+        <div
+          style={{
+            fontSize: 18,
+            fontWeight: 600,
+            margin: "0.5rem 0",
+          }}
+        >
+          {article.title}
+        </div>
+        <div
+          style={{
+            color: "#666",
+            fontSize: 15,
+            marginBottom: 12,
+          }}
+        >
+          {article.description}
+        </div>
+        <div style={{ fontSize: 13, color: "#888" }}>
+          {article.published
+            ? new Date(article.published).toLocaleString()
+            : ""}
+        </div>
+      </div>
+    </a>
+  );
+});
 
 function UsersDashboard({ children }) {
   const [news, setNews] = useState([]);
@@ -220,87 +308,12 @@ function UsersDashboard({ children }) {
                 }}
               >
                 {paginatedNews.map((article, idx) => (
-                  <a
+                  <NewsCard
                     key={idx}
-                    href={article.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      display: "block",
-                      background: "#fff",
-                      borderRadius: 12,
-                      overflow: "hidden",
-                      boxShadow: "0 2px 10px rgba(0,0,0,0.04)",
-                      position: "relative",
-                      textDecoration: "none",
-                      color: "inherit",
-                    }}
-                  >
-                    {article.image && (
-                      <img
-                        src={article.image}
-                        alt={article.title}
-                        style={{
-                          width: "100%",
-                          height: 180,
-                          objectFit: "cover",
-                          background: "#ffe5cc",
-                        }}
-                        onError={(e) => {
-                          e.target.style.display = "none";
-                        }}
-                      />
-                    )}
-                    <button
-                      onClick={e => { e.preventDefault(); e.stopPropagation(); handleBookmark(article); }}
-                      style={{
-                        position: "absolute",
-                        top: 12,
-                        right: 12,
-                        background: "none",
-                        border: "none",
-                        fontSize: 22,
-                        color: isBookmarked(article) ? "#ff8800" : "#bbb",
-                        cursor: "pointer",
-                      }}
-                    >
-                      <FaBookmark />
-                    </button>
-                    <div style={{ padding: "1rem" }}>
-                      <div
-                        style={{
-                          color: "#ff8800",
-                          fontWeight: 600,
-                          fontSize: 14,
-                        }}
-                      >
-                        {article.source}
-                      </div>
-                      <div
-                        style={{
-                          fontSize: 18,
-                          fontWeight: 600,
-                          margin: "0.5rem 0",
-                        }}
-                      >
-                        {article.title}
-                      </div>
-                      <div
-                        style={{
-                          color: "#666",
-                          fontSize: 15,
-                          marginBottom: 12,
-                        }}
-                      >
-                        {article.description}
-                      </div>
-                      <div style={{ fontSize: 13, color: "#888" }}>
-                        {article.published
-                          ? new Date(article.published).toLocaleString()
-                          : ""}
-                      </div>
-                    </div>
-                  </a>
+                    article={article}
+                    isBookmarked={isBookmarked}
+                    handleBookmark={handleBookmark}
+                  />
                 ))}
               </div>
 
