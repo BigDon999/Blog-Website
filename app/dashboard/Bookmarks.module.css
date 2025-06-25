@@ -1,0 +1,137 @@
+.container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem 3rem 1rem;
+}
+.header {
+  margin-bottom: 2rem;
+}
+.title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 0.5rem;
+}
+.subtitle {
+  font-size: 1.1rem;
+  color: #888;
+  margin-bottom: 2rem;
+}
+.bookmarksList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.bookmarkCard {
+  display: flex;
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+  transition: transform 0.18s, box-shadow 0.18s;
+}
+.bookmarkCard:hover, .cardHover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 8px 24px rgba(255,136,0,0.13);
+}
+.cardImage {
+  width: 180px;
+  height: 140px;
+  object-fit: cover;
+  background: #ffe5cc;
+}
+.cardContent {
+  flex: 1;
+  padding: 1.5rem 1.25rem 1.25rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+}
+.cardCategory {
+  color: #ff8800;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.cardTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 0.7rem;
+  line-height: 1.4;
+}
+.cardExcerpt {
+  color: #666;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1.1rem;
+}
+.cardMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+.cardDate {
+  color: #888;
+  font-size: 0.97rem;
+}
+.cardActions {
+  display: flex;
+  gap: 1.2rem;
+}
+.actionButton {
+  background: none;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 1rem;
+  padding: 0.4rem 0.7rem;
+  border-radius: 5px;
+  transition: background 0.18s, color 0.18s;
+}
+.actionButton:hover, .actionButton:focus {
+  background: rgba(255,136,0,0.10);
+  color: #ff8800;
+}
+.removeButton {
+  color: #e74c3c;
+  font-weight: 600;
+}
+.removeButton:hover {
+  background: #ffe5cc;
+}
+.emptyState {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #666;
+}
+.emptyStateIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #ff8800;
+}
+@media (max-width: 700px) {
+  .bookmarkCard {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .cardImage {
+    width: 100%;
+    height: 180px;
+  }
+}
+@media (max-width: 500px) {
+  .container {
+    padding: 0.5rem 0.2rem 1rem 0.2rem;
+  }
+  .header {
+    margin-bottom: 1rem;
+  }
+  .bookmarksList {
+    gap: 0.7rem;
+  }
+} 

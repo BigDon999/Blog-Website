@@ -1,0 +1,90 @@
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2.5rem 1rem 3rem 1rem;
+}
+.heroSection {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+.heroImageWrapper {
+  flex: 1 1 320px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.heroImage {
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(255,136,0,0.10);
+  width: 100%;
+  max-width: 480px;
+  height: auto;
+}
+.heroText {
+  flex: 2 1 400px;
+  min-width: 280px;
+}
+.title {
+  font-size: 2.3rem;
+  font-weight: 800;
+  color: #ff8800;
+  margin-bottom: 1.1rem;
+}
+.subtitle {
+  font-size: 1.15rem;
+  color: #444;
+  margin-bottom: 1.2rem;
+  line-height: 1.7;
+}
+.features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  color: #222;
+  font-size: 1.05rem;
+}
+.features li {
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.missionSection {
+  background: #fff7ef;
+  border-radius: 14px;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 2px 12px rgba(255,136,0,0.07);
+  margin-top: 2rem;
+}
+.missionTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ff8800;
+  margin-bottom: 0.7rem;
+}
+.missionText {
+  color: #444;
+  font-size: 1.08rem;
+  line-height: 1.7;
+}
+@media (max-width: 900px) {
+  .heroSection {
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: center;
+  }
+  .heroText {
+    min-width: 0;
+  }
+}
+@media (max-width: 600px) {
+  .container {
+    padding: 1rem 0.2rem 1.5rem 0.2rem;
+  }
+  .missionSection {
+    padding: 1.2rem 0.5rem;
+  }
+} 
