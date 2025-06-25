@@ -220,14 +220,20 @@ function UsersDashboard({ children }) {
                 }}
               >
                 {paginatedNews.map((article, idx) => (
-                  <div
+                  <a
                     key={idx}
+                    href={article.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     style={{
+                      display: "block",
                       background: "#fff",
                       borderRadius: 12,
                       overflow: "hidden",
                       boxShadow: "0 2px 10px rgba(0,0,0,0.04)",
                       position: "relative",
+                      textDecoration: "none",
+                      color: "inherit",
                     }}
                   >
                     {article.image && (
@@ -246,7 +252,7 @@ function UsersDashboard({ children }) {
                       />
                     )}
                     <button
-                      onClick={() => handleBookmark(article)}
+                      onClick={e => { e.preventDefault(); e.stopPropagation(); handleBookmark(article); }}
                       style={{
                         position: "absolute",
                         top: 12,
@@ -294,7 +300,7 @@ function UsersDashboard({ children }) {
                           : ""}
                       </div>
                     </div>
-                  </div>
+                  </a>
                 ))}
               </div>
 
