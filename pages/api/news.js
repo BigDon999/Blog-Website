@@ -1,5 +1,9 @@
 export default async function handler(req, res) {
   const { category } = req.query;
+  // Use environment variables for API keys
+  const NEWS_API_KEY = process.env.NEWS_API_KEY;
+  const GNEWS_API_KEY = process.env.GNEWS_API_KEY;
+  const CURRENTS_API_KEY = process.env.CURRENTS_API_KEY;
   try {
     // NewsAPI
     let newsApiUrl = `https://newsapi.org/v2/top-headlines?language=en&pageSize=10&apiKey=${NEWS_API_KEY}`;
