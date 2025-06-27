@@ -152,8 +152,7 @@ function UsersDashboard({ children }) {
   const filteredNews = news.filter(
     (a) =>
       a.title.toLowerCase().includes(search.toLowerCase()) ||
-      (a.description &&
-        a.description.toLowerCase().includes(search.toLowerCase()))
+      (a.description && a.description.toLowerCase().includes(search.toLowerCase()))
   );
   const totalPages = Math.ceil(filteredNews.length / PAGE_SIZE);
   const paginatedNews = filteredNews.slice(
@@ -172,6 +171,7 @@ function UsersDashboard({ children }) {
       <section
         className={`${styles.slideIn} ${styles.slideInDelay1}`}
         style={{
+          marginTop: isMobile ? 70 : 60,
           display: "flex",
           flexDirection: isMobile ? "column" : "row",
           alignItems: "center",

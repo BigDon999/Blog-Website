@@ -4,8 +4,6 @@ import React, { useState } from "react";
 import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
 import { useAuth } from '@/context/AuthContext';
-import { auth } from '@/firebase/config';
-import { signOut } from 'firebase/auth';
 
 const styles = {
   navbar: {
@@ -122,18 +120,9 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
-  const { user } = useAuth();
 
   const toggleMenu = () => setIsOpen((open) => !open);
   const closeMenu = () => setIsOpen(false);
-
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-    } catch (error) {
-      console.error('Logout error:', error);
-    }
-  };
 
   const switchToSignup = () => {
     setShowLoginModal(false);
@@ -146,20 +135,6 @@ const Navbar = () => {
   };
 
   const renderAuthButtons = () => {
-    if (user) {
-      return (
-        <li>
-          <button 
-            className="nav-login" 
-            style={styles.login}
-            onClick={handleLogout}
-          >
-            Logout
-          </button>
-        </li>
-      );
-    }
-
     return (
       <>
         <li>
@@ -305,12 +280,14 @@ const Navbar = () => {
         isOpen={showLoginModal} 
         onClose={() => setShowLoginModal(false)}
         onSwitchToSignup={switchToSignup}
+        redirectToDashboard={true}
       />
       
       <SignupModal 
         isOpen={showSignupModal} 
         onClose={() => setShowSignupModal(false)}
         onSwitchToLogin={switchToLogin}
+        redirectToDashboard={true}
       />
     </>
   );

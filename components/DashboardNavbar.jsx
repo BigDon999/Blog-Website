@@ -1,12 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { FaHome, FaInfoCircle, FaBookmark, FaUser, FaCog, FaSignOutAlt, FaGlobe, FaBuilding, FaLaptop, FaFilm, FaFutbol, FaFlask, FaHeartbeat, FaFlagUsa, FaGlobeAmericas, FaBars, FaTimes } from 'react-icons/fa';
 import styles from './DashboardNavbar.module.css';
 import { useAuth } from '@/context/AuthContext';
 import md5 from 'md5';
 import Image from 'next/image';
+import { useRouter, usePathname } from 'next/navigation';
 
 const categories = [
   { name: 'General', icon: <FaGlobe /> },
@@ -25,6 +26,10 @@ export default function DashboardNavbar({ active, onNavChange, onLogout }) {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showCategories, setShowCategories] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
+  const [isTouch, setIsTouch] = useState(false);
+  const categoriesDropdownRef = useRef(null);
 
   // Compute avatar for navbar
   const avatar = user?.photoURL || (user?.email ? `https://www.gravatar.com/avatar/${md5(user.email.trim().toLowerCase())}?d=identicon` : '');
@@ -43,17 +48,40 @@ export default function DashboardNavbar({ active, onNavChange, onLogout }) {
     if (onLogout) onLogout();
   };
 
-  // Close dropdown when clicking outside
-  React.useEffect(() => {
-    if (!showDropdown) return;
+  const handleCategoryClick = (cat) => {
+    setShowCategories(false);
+    if (onNavChange) onNavChange('categories');
+    router.push(`/dashboard/categories/${cat.toLowerCase()}`);
+  };
+
+  useEffect(() => {
+    // Detect if device is touch
+    function handleTouch() {
+      setIsTouch(true);
+      window.removeEventListener('touchstart', handleTouch);
+    }
+    window.addEventListener('touchstart', handleTouch, { passive: true });
+    return () => window.removeEventListener('touchstart', handleTouch);
+  }, []);
+
+  // Close dropdown when clicking outside (for both desktop and mobile)
+  useEffect(() => {
+    if (!showCategories) return;
     function handleClick(e) {
-      if (!e.target.closest(`.${styles.profileSection}`)) {
-        setShowDropdown(false);
+      if (
+        categoriesDropdownRef.current &&
+        !categoriesDropdownRef.current.contains(e.target)
+      ) {
+        setShowCategories(false);
       }
     }
     document.addEventListener('mousedown', handleClick);
-    return () => document.removeEventListener('mousedown', handleClick);
-  }, [showDropdown]);
+    document.addEventListener('touchstart', handleClick);
+    return () => {
+      document.removeEventListener('mousedown', handleClick);
+      document.removeEventListener('touchstart', handleClick);
+    };
+  }, [showCategories]);
 
   // Accessibility: close dropdowns on Escape
   React.useEffect(() => {
@@ -106,12 +134,12 @@ export default function DashboardNavbar({ active, onNavChange, onLogout }) {
           <div
             className={styles.dropdownMenu}
             tabIndex={0}
-            onBlur={() => setShowCategories(false)}
+            onBlur={!isTouch ? () => setShowCategories(false) : undefined}
+            ref={categoriesDropdownRef}
           >
             <span
               className={`${styles.navItem} ${active === 'categories' ? styles.navItemActive : ''}`}
               onClick={() => setShowCategories((prev) => !prev)}
-              onMouseEnter={() => setShowCategories(true)}
               aria-haspopup="true"
               aria-expanded={showCategories}
               style={{ display: 'flex', alignItems: 'center', gap: 6 }}
@@ -121,8 +149,6 @@ export default function DashboardNavbar({ active, onNavChange, onLogout }) {
             {showCategories && (
               <div
                 className={styles.categoriesDropdown}
-                onMouseEnter={() => setShowCategories(true)}
-                onMouseLeave={() => setShowCategories(false)}
                 role="menu"
               >
                 <Link
@@ -134,17 +160,22 @@ export default function DashboardNavbar({ active, onNavChange, onLogout }) {
                 >
                   All Categories
                 </Link>
-                {categories.map((cat) => (
-                  <Link
-                    key={cat.name}
-                    href={`/dashboard/categories/${cat.name.toLowerCase()}`}
-                    className={styles.categoryItem}
-                    onClick={() => handleNavClick('categories')}
-                    role="menuitem"
-                  >
-                    <span className={styles.categoryIcon}>{cat.icon}</span> {cat.name}
-                  </Link>
-                ))}
+                {categories.map((cat) => {
+                  const isActive = pathname === `/dashboard/categories/${cat.name.toLowerCase()}`;
+                  return (
+                    <button
+                      key={cat.name}
+                      className={styles.categoryItem + (isActive ? ' ' + styles.navItemActive : '')}
+                      onClick={() => handleCategoryClick(cat.name)}
+                      role="menuitem"
+                      style={{
+                        display: 'flex', alignItems: 'center', width: '100%', background: 'none', border: 'none', cursor: 'pointer', fontWeight: isActive ? 700 : 500, color: isActive ? '#ff8800' : undefined
+                      }}
+                    >
+                      <span className={styles.categoryIcon}>{cat.icon}</span> {cat.name}
+                    </button>
+                  );
+                })}
               </div>
             )}
           </div>

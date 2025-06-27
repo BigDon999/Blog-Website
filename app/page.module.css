@@ -7,6 +7,7 @@
 
 /* ===== HERO SECTION ===== */
 .hero {
+  margin-top: 60px;
   display: flex;
   flex-direction: column-reverse; /* 👈 reverse on mobile */
   align-items: center;

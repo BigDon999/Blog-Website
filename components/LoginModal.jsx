@@ -131,7 +131,7 @@ const styles = {
   }
 };
 
-const LoginModal = ({ isOpen, onClose, onSwitchToSignup }) => {
+const LoginModal = ({ isOpen, onClose, onSwitchToSignup, redirectToDashboard }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -189,7 +189,12 @@ const LoginModal = ({ isOpen, onClose, onSwitchToSignup }) => {
       console.log('Login successful:', userCredential.user.email);
       setSuccess('Login successful!');
       setFormData({ email: '', password: '' });
-      router.push('/dashboard');
+      if (redirectToDashboard) {
+        router.push('/dashboard');
+        onClose && onClose();
+      } else {
+        router.push('/dashboard');
+      }
     } catch (error) {
       console.error('Login error:', error.code, error.message);
       switch (error.code) {
