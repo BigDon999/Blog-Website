@@ -1,3 +1,4 @@
+'use client';
 import Link from 'next/link';
 import { FaGlobe, FaGlobeAmericas, FaFlagUsa, FaBuilding, FaLaptop, FaFilm, FaFutbol, FaFlask, FaHeartbeat, FaBookmark } from 'react-icons/fa';
 import styles from './Categories.module.css';
